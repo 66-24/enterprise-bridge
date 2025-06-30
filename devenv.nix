@@ -24,6 +24,14 @@
   enterShell = ''
     hello
     git --version
+    mkdir -p otel
+    if [ ! -f otel/opentelemetry-javaagent.jar ]; then
+      echo "[devenv] Downloading OpenTelemetry Java Agent..."
+      curl -sSL https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar \
+        -o otel/opentelemetry-javaagent.jar
+    else
+      echo "[devenv] OTEL agent already present."
+    fi
   '';
 
   # https://devenv.sh/tasks/

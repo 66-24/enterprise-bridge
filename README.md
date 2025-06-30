@@ -4,7 +4,7 @@
 
 #### 🚀 Overview
 
-A Starfleet-themed Java 21 Spring Boot 3.3 app demonstrating modern observability (O11y 2.0):
+A Starfleet-themed Java 23 Spring Boot 3.5 app demonstrating modern observability (O11y 2.0):
 
 - ✅ JSON logs with trace context → Loki
 - ✅ Traces pushed via OTEL Java Agent → Tempo
