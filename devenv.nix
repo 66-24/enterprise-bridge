@@ -5,7 +5,11 @@
   env.GREET = "devenv";
 
   # https://devenv.sh/packages/
-  packages = with pkgs; [jdk23_headless];
+  packages = with pkgs; [
+    jdk23_headless
+    libxml2
+    shellcheck
+    ];
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
@@ -21,17 +25,23 @@
     echo hello from $GREET
   '';
 
+  scripts.otel-download.exec = ''
+      mkdir -p otel
+      if [ ! -f otel/opentelemetry-javaagent.jar ]; then
+        echo "[devenv] Downloading OpenTelemetry Java Agent..."
+        curl -sSL https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar \
+          -o otel/opentelemetry-javaagent.jar
+      else
+        echo "[devenv] OTEL agent already present."
+      fi
+  '';
+
   enterShell = ''
     hello
     git --version
-    mkdir -p otel
-    if [ ! -f otel/opentelemetry-javaagent.jar ]; then
-      echo "[devenv] Downloading OpenTelemetry Java Agent..."
-      curl -sSL https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar \
-        -o otel/opentelemetry-javaagent.jar
-    else
-      echo "[devenv] OTEL agent already present."
-    fi
+
+    otel-download
+
   '';
 
   # https://devenv.sh/tasks/

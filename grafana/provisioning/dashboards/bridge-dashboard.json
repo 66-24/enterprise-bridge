@@ -1,0 +1,45 @@
+{
+  "id": null,
+  "title": "Bridge Telemetry",
+  "uid": "bridge-telemetry",
+  "schemaVersion": 37,
+  "version": 1,
+  "panels": [
+    {
+      "refId": "A",
+      "type": "timeseries",
+      "title": "JVM Heap Used",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "jvm_memory_used_bytes{area=\"heap\"}",
+          "legendFormat": "{{job}}",
+          "interval": ""
+        }
+      ],
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "refId": "A",
+      "type": "logs",
+      "title": "Application Logs",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "{job=\"spring-app\"}"
+        }
+      ],
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "refId": "A",
+      "type": "trace",
+      "title": "Trace Explorer",
+      "datasource": "Tempo",
+      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 5 },
+      "options": {}
+    }
+  ],
+  "templating": { "list": [] },
+  "refresh": "10s"
+}
